@@ -1,6 +1,0 @@
-tree 08fac6c1432ef47f7bdfa855dec17698462712f9
-parent 1a5a558b3d605029872c4d07600d3d768b42b4e7
-author OpenClaw Agent <agent@openclaw.ai> 1772048982 +1100
-committer OpenClaw Agent <agent@openclaw.ai> 1772048982 +1100
-
-Remove API script with exposed credentials
