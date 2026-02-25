@@ -4,58 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RimForge — Precision Forged. Performance Driven.</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        :root { --orange: #FF5722; --black: #000000; --white: #FFFFFF; --gray-300: #B0B0B0; --gray-500: #606060; }
+        :root { --orange: #FF5722; --orange-light: #FF7043; --black: #000000; --black-soft: #050505; --charcoal: #0A0A0A; --white: #FFFFFF; --gray-300: #B0B0B0; --gray-400: #909090; --gray-500: #606060; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { font-size: clamp(14px, 1vw, 18px); }
         body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
         
-        .loader { position: fixed; inset: 0; background: var(--black); display: flex; align-items: center; justify-content: center; z-index: 99999; transition: opacity 0.6s; }
+        .loader { position: fixed; inset: 0; background: var(--black); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 99999; transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1); gap: 2rem; }
         .loader.hidden { opacity: 0; pointer-events: none; }
-        .loader-text { font-family: 'Cormorant Garamond', serif; font-size: 2rem; letter-spacing: 0.3em; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+        .loader-text { font-family: 'Cormorant Garamond', serif; font-size: 2rem; letter-spacing: 0.4em; font-weight: 400; }
+        .loader-bar { width: 200px; height: 1px; background: rgba(255,255,255,0.1); overflow: hidden; }
+        .loader-progress { width: 100%; height: 100%; background: var(--orange); transform: translateX(-100%); animation: load 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes load { to { transform: translateX(0); } }
         
-        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center; transition: all 0.6s; }
-        .nav.scrolled { background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); padding: 1.25rem 5vw; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 600; letter-spacing: 0.2em; text-decoration: none; color: var(--white); }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .nav.scrolled { background: rgba(0,0,0,0.95); backdrop-filter: blur(30px); padding: 1.25rem 5vw; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 600; letter-spacing: 0.2em; text-decoration: none; color: var(--white); transition: color 0.3s; }
+        .nav-logo:hover { color: var(--orange); }
         .nav-links { display: flex; gap: 3rem; list-style: none; }
-        .nav-links a { color: var(--gray-300); text-decoration: none; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; transition: color 0.3s; }
+        .nav-links a { color: var(--gray-300); text-decoration: none; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--orange); transition: width 0.3s; }
         .nav-links a:hover { color: var(--orange); }
-        .nav-cta { color: var(--white); padding: 0.75rem 1.5rem; text-decoration: none; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid var(--gray-500); transition: all 0.4s; }
-        .nav-cta:hover { border-color: var(--orange); background: var(--orange); color: var(--black); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-cta { color: var(--white); padding: 0.875rem 1.75rem; text-decoration: none; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid var(--gray-500); transition: all 0.4s; position: relative; overflow: hidden; }
+        .nav-cta::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--orange); transition: left 0.4s; z-index: -1; }
+        .nav-cta:hover { border-color: var(--orange); color: var(--black); }
+        .nav-cta:hover::before { left: 0; }
         
         .hero { min-height: 100vh; display: flex; align-items: center; padding: 10rem 5vw 6rem; position: relative; overflow: hidden; }
         .hero-content { max-width: 1400px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
-        .hero-badge { display: inline-flex; align-items: center; gap: 0.75rem; background: rgba(255,87,34,0.1); border: 1px solid rgba(255,87,34,0.2); padding: 0.625rem 1.25rem; border-radius: 100px; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); margin-bottom: 2rem; }
-        .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--orange); border-radius: 50%; animation: blink 2s infinite; }
-        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.75rem; background: rgba(255,87,34,0.1); border: 1px solid rgba(255,87,34,0.2); padding: 0.625rem 1.5rem; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); margin-bottom: 2rem; }
+        .hero-badge svg { width: 8px; height: 8px; }
         
         h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 7vw, 6.5rem); font-weight: 400; line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
-        h1 .line { display: block; opacity: 0; transform: translateY(40px); animation: reveal-text 1s forwards; }
-        h1 .line:nth-child(1) { animation-delay: 0.2s; } h1 .line:nth-child(2) { animation-delay: 0.4s; color: var(--orange); font-style: italic; } h1 .line:nth-child(3) { animation-delay: 0.6s; }
+        h1 .line { display: block; opacity: 0; transform: translateY(40px); animation: reveal-text 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        h1 .line:nth-child(1) { animation-delay: 0.3s; } h1 .line:nth-child(2) { animation-delay: 0.5s; color: var(--orange); font-style: italic; } h1 .line:nth-child(3) { animation-delay: 0.7s; }
         @keyframes reveal-text { to { opacity: 1; transform: translateY(0); } }
         
         .hero-subtitle { font-size: 1.25rem; color: var(--gray-300); max-width: 500px; margin-bottom: 2.5rem; line-height: 1.9; font-weight: 300; }
         .hero-buttons { display: flex; gap: 1rem; }
-        .btn { display: inline-flex; align-items: center; gap: 0.75rem; padding: 1.125rem 2.25rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: all 0.4s; cursor: pointer; border: none; }
-        .btn-primary { background: var(--orange); color: var(--black); } .btn-primary:hover { background: #FF7043; transform: translateY(-3px); box-shadow: 0 25px 50px rgba(255,87,34,0.4); }
-        .btn-secondary { background: transparent; color: var(--white); border: 1px solid var(--gray-500); } .btn-secondary:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-3px); }
+        .btn { display: inline-flex; align-items: center; gap: 0.75rem; padding: 1.125rem 2.25rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; border: none; position: relative; overflow: hidden; }
+        .btn svg { width: 16px; height: 16px; transition: transform 0.3s; }
+        .btn:hover svg { transform: translateX(4px); }
+        .btn-primary { background: var(--orange); color: var(--black); } 
+        .btn-primary:hover { background: var(--orange-light); transform: translateY(-3px); box-shadow: 0 25px 50px rgba(255,87,34,0.4); }
+        .btn-secondary { background: transparent; color: var(--white); border: 1px solid var(--gray-500); } 
+        .btn-secondary:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-3px); }
         
         .hero-stats { display: flex; gap: 5rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
         .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 400; color: var(--white); line-height: 1; }
         .stat-label { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray-500); margin-top: 0.5rem; }
         .trust-badges { display: flex; gap: 2.5rem; margin-top: 2.5rem; flex-wrap: wrap; }
-        .trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--gray-400); }
+        .trust-item { display: flex; align-items: center; gap: 0.75rem; font-size: 0.875rem; color: var(--gray-400); }
+        .trust-item svg { width: 18px; height: 18px; color: var(--orange); }
         
         .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; min-height: 600px; }
         .hero-rim-main { position: relative; width: 100%; max-width: 550px; z-index: 3; animation: float 6s ease-in-out infinite; filter: drop-shadow(0 40px 80px rgba(255,87,34,0.25)); }
         .hero-rim-main img { width: 100%; height: auto; display: block; }
-        .hero-rim-side { position: absolute; width: 280px; opacity: 0.15; z-index: 2; animation: drift-slow 25s infinite; }
+        .hero-rim-side { position: absolute; width: 280px; opacity: 0.12; z-index: 2; animation: drift-slow 25s infinite; }
         .hero-rim-side.left { left: -60px; top: 10%; }
         .hero-rim-side.right { right: -40px; bottom: 5%; animation-delay: -5s; }
         .hero-rim-side img { width: 100%; height: auto; }
-        .hero-rim-back { position: absolute; width: 200px; opacity: 0.08; z-index: 1; }
+        .hero-rim-back { position: absolute; width: 200px; opacity: 0.06; z-index: 1; }
         .hero-rim-back.top-right { top: -30px; right: 10%; animation: drift 20s infinite reverse; }
         .hero-rim-back img { width: 100%; height: auto; }
         @keyframes float { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-20px) rotate(2deg); } }
@@ -77,40 +88,45 @@
         h2 em { font-style: italic; color: var(--orange); }
         .section-subtitle { color: var(--gray-300); font-size: 1.125rem; font-weight: 300; line-height: 1.9; }
         .features-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-        .feature-card { background: rgba(10,10,10,0.6); border: 1px solid rgba(255,255,255,0.06); padding: 2.5rem; backdrop-filter: blur(10px); transition: all 0.5s; position: relative; overflow: hidden; }
-        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--orange), transparent); transform: scaleX(0); transition: transform 0.6s; }
+        .feature-card { background: rgba(10,10,10,0.6); border: 1px solid rgba(255,255,255,0.06); padding: 2.5rem; backdrop-filter: blur(10px); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--orange), transparent); transform: scaleX(0); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         .feature-card:hover { border-color: rgba(255,87,34,0.2); transform: translateY(-10px); background: rgba(17,17,17,0.8); }
         .feature-card:hover::before { transform: scaleX(1); }
-        .feature-icon { width: 56px; height: 56px; background: rgba(255,87,34,0.1); border: 1px solid rgba(255,87,34,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.5rem; transition: all 0.4s; }
+        .feature-icon { width: 56px; height: 56px; background: rgba(255,87,34,0.1); border: 1px solid rgba(255,87,34,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; transition: all 0.4s; }
+        .feature-icon svg { width: 24px; height: 24px; color: var(--orange); }
         .feature-card:hover .feature-icon { background: rgba(255,87,34,0.2); transform: scale(1.1); }
         h3 { font-size: 1.25rem; font-weight: 500; margin-bottom: 0.875rem; }
         .feature-card p { color: var(--gray-300); font-size: 0.9375rem; line-height: 1.7; font-weight: 300; }
         
         .products { padding: 10rem 5vw; position: relative; overflow: hidden; }
-        .deco-rim { position: absolute; opacity: 0.05; pointer-events: none; filter: grayscale(100%); }
+        .deco-rim { position: absolute; opacity: 0.04; pointer-events: none; }
         .deco-rim img { width: 100%; height: auto; }
         .deco-rim-1 { top: 5%; left: -10%; width: 400px; animation: drift 30s infinite; }
         .deco-rim-2 { bottom: 10%; right: -12%; width: 500px; animation: drift 35s infinite reverse; }
-        .deco-rim-3 { top: 50%; right: 0%; width: 300px; animation: drift 25s infinite; }
         .products-header { display: flex; justify-content: space-between; align-items: flex-end; max-width: 1200px; margin: 0 auto 4rem; position: relative; z-index: 1; }
         .products-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; position: relative; z-index: 1; }
-        .product-card { background: rgba(5,5,5,0.8); border: 1px solid rgba(255,255,255,0.05); overflow: hidden; transition: all 0.5s; cursor: pointer; position: relative; }
+        .product-card { background: rgba(5,5,5,0.8); border: 1px solid rgba(255,255,255,0.05); overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; position: relative; }
         .product-card:hover { border-color: rgba(255,87,34,0.3); transform: translateY(-15px); box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
         .product-image { aspect-ratio: 1; background: linear-gradient(135deg, #080808, #050505); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 2rem; }
-        .product-image img { width: 100%; height: 100%; object-fit: contain; transition: all 0.6s; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5)); }
+        .product-image img { width: 100%; height: 100%; object-fit: contain; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5)); }
         .product-card:hover .product-image img { transform: scale(1.08) rotate(-3deg); }
-        .quick-view { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%) translateY(20px); background: rgba(255,87,34,0.9); color: var(--black); padding: 0.625rem 1.5rem; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; transition: all 0.4s; pointer-events: none; }
+        .quick-view { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%) translateY(20px); background: rgba(255,87,34,0.95); color: var(--black); padding: 0.625rem 1.5rem; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; }
         .product-card:hover .quick-view { opacity: 1; transform: translateX(-50%) translateY(0); }
         .product-info { padding: 1.75rem; border-top: 1px solid rgba(255,255,255,0.05); }
         .product-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
         .product-category { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); }
-        .product-rating { font-size: 0.75rem; color: var(--orange); }
+        .product-rating { display: flex; gap: 2px; }
+        .product-rating svg { width: 12px; height: 12px; color: var(--orange); fill: var(--orange); }
         .product-name { font-family: 'Cormorant Garamond', serif; font-size: 1.375rem; font-weight: 500; margin-bottom: 0.5rem; }
         .product-specs { font-size: 0.8125rem; color: var(--gray-400); margin-bottom: 1rem; }
         .product-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); }
         .product-price { font-size: 1.25rem; font-weight: 600; color: var(--white); }
-        .add-to-cart { width: 44px; height: 44px; background: transparent; border: 1px solid var(--gray-500); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; font-size: 1.25rem; color: var(--white); }
-        .add-to-cart:hover { background: var(--orange); border-color: var(--orange); color: var(--black); }
+        .add-to-cart { width: 44px; height: 44px; background: transparent; border: 1px solid var(--gray-500); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
+        .add-to-cart svg { width: 20px; height: 20px; color: var(--white); transition: color 0.3s; }
+        .add-to-cart:hover { background: var(--orange); border-color: var(--orange); }
+        .add-to-cart:hover svg { color: var(--black); }
+        .add-to-cart.added { background: #22c55e; border-color: #22c55e; }
+        .add-to-cart.added svg { color: white; }
         
         .cta { padding: 12rem 5vw; text-align: center; position: relative; overflow: hidden; }
         .cta-bg-rim { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; opacity: 0.04; pointer-events: none; animation: slow-spin 100s linear infinite; }
@@ -123,16 +139,17 @@
         .email-capture h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 0.75rem; }
         .email-capture p { color: var(--gray-300); font-size: 1rem; margin-bottom: 2rem; }
         .email-form { display: flex; gap: 1rem; max-width: 500px; margin: 0 auto; }
-        .email-input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1rem 1.5rem; color: var(--white); font-size: 0.9375rem; transition: all 0.3s; }
+        .email-input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1rem 1.5rem; color: var(--white); font-size: 0.9375rem; transition: all 0.3s; font-family: 'Inter', sans-serif; }
         .email-input:focus { outline: none; border-color: var(--orange); background: rgba(255,255,255,0.08); }
         .email-input::placeholder { color: var(--gray-500); }
+        .email-form .btn { padding: 1rem 2rem; }
         
         footer { padding: 5rem 5vw 2rem; border-top: 1px solid rgba(255,255,255,0.05); background: linear-gradient(180deg, transparent, rgba(255,255,255,0.01)); }
         .footer-grid { max-width: 1200px; margin: 0 auto 4rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; }
-        .footer-brand p { color: var(--gray-300); font-size: 0.875rem; line-height: 1.8; font-weight: 300; }
+        .footer-brand p { color: var(--gray-300); font-size: 0.875rem; line-height: 1.8; font-weight: 300; margin-top: 1.5rem; }
         .footer-title { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 1.5rem; }
         .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
-        .footer-links a { color: var(--gray-300); text-decoration: none; font-size: 0.875rem; font-weight: 300; transition: all 0.3s; }
+        .footer-links a { color: var(--gray-300); text-decoration: none; font-size: 0.875rem; font-weight: 300; transition: all 0.3s; display: inline-block; }
         .footer-links a:hover { color: var(--orange); padding-left: 0.5rem; }
         .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
         .footer-bottom p { color: var(--gray-500); font-size: 0.75rem; }
@@ -145,13 +162,17 @@
     </style>
 </head>
 <body>
-    <div class="loader" id="loader"><div class="loader-text">RIMFORGE</div></div>
+    <div class="loader" id="loader">
+        <div class="loader-text">RIMFORGE</div>
+        <div class="loader-bar"><div class="loader-progress"></div></div>
+    </div>
     
     <nav class="nav" id="nav">
         <a href="#" class="nav-logo">RIMFORGE</a>
         <ul class="nav-links">
             <li><a href="#features">Technology</a></li>
             <li><a href="#products">Wheels</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
         <a href="#products" class="nav-cta">Configure Yours</a>
     </nav>
@@ -159,7 +180,10 @@
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <div class="hero-badge">Now Shipping Australia-Wide</div>
+                <div class="hero-badge">
+                    <svg viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+                    Now Shipping Australia-Wide
+                </div>
                 <h1>
                     <span class="line">Forged</span>
                     <span class="line">performance.</span>
@@ -167,7 +191,10 @@
                 </h1>
                 <p class="hero-subtitle">Aerospace-grade forged wheels engineered for the street. Monoblock construction, precision fitment, legendary style.</p>
                 <div class="hero-buttons">
-                    <a href="#products" class="btn btn-primary">Explore Collection →</a>
+                    <a href="#products" class="btn btn-primary">
+                        Explore Collection
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
                     <a href="#features" class="btn btn-secondary">Our Process</a>
                 </div>
                 <div class="hero-stats">
@@ -176,17 +203,26 @@
                     <div class="stat-item"><div class="stat-value">TÜV</div><div class="stat-label">Certified</div></div>
                 </div>
                 <div class="trust-badges">
-                    <div class="trust-item">⚡ Lifetime Warranty</div>
-                    <div class="trust-item">⚡ Perfect Fitment Guarantee</div>
-                    <div class="trust-item">⚡ 0% Finance Available</div>
+                    <div class="trust-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        Lifetime Warranty
+                    </div>
+                    <div class="trust-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                        Perfect Fitment Guarantee
+                    </div>
+                    <div class="trust-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        0% Finance Available
+                    </div>
                 </div>
             </div>
             <div class="hero-visual">
                 <div class="rim-glow"></div>
-                <div class="hero-rim-side left"><img src="Mountain_bike_tyre_design_render_7f2bb73d4b.png" alt="RimForge Wheel"></div>
-                <div class="hero-rim-back top-right"><img src="Mountain_bike_wheel_side_view_c5c1b5a5ac.png" alt="RimForge Wheel"></div>
-                <div class="hero-rim-side right"><img src="Mountain_bike_tyre_design_render_f3efe22e9d.png" alt="RimForge Wheel"></div>
-                <div class="hero-rim-main"><img src="biketyre.jpeg" alt="RimForge Forged Wheel"></div>
+                <div class="hero-rim-side left"><img src="Car_rim_in_black_void_6524cde58f.png" alt="RimForge Wheel"></div>
+                <div class="hero-rim-back top-right"><img src="Premium_car_tyre_black_void_6e2eb8c193.png" alt="RimForge Wheel"></div>
+                <div class="hero-rim-side right"><img src="Premium_car_tyre_black_void_942e6b24ab.png" alt="RimForge Wheel"></div>
+                <div class="hero-rim-main"><img src="Car_rim_in_black_void_4c090b5fcb.png" alt="RimForge Forged Wheel"></div>
             </div>
         </div>
     </section>
@@ -215,74 +251,171 @@
             <p class="section-subtitle">Every wheel is TÜV certified and load-tested beyond industry standards. Precision engineering meets aggressive styling.</p>
         </div>
         <div class="features-grid">
-            <div class="feature-card"><div class="feature-icon">🔥</div><h3>Forged Monoblock</h3><p>Aerospace-grade 6061-T6 aluminum forged under 10,000 tons. Lighter, stronger, more responsive.</p></div>
-            <div class="feature-card"><div class="feature-icon">⚙️</div><h3>Custom Fitment</h3><p>Precision-engineered for your vehicle. Custom offsets, widths, and bolt patterns available.</p></div>
-            <div class="feature-card"><div class="feature-icon">🛡️</div><h3>TÜV Certified</h3><p>Every design undergoes rigorous testing. JWL, VIA, and TÜV certified for safety and quality.</p></div>
-            <div class="feature-card"><div class="feature-icon">⚡</div><h3>900kg Load Rated</h3><p>Track-proven strength. From daily driving to track days, our wheels handle it all.</p></div>
-            <div class="feature-card"><div class="feature-icon">✨</div><h3>Any Finish</h3><p>Brushed, polished, gloss, matte, or custom. Powder coat or ceramic coat options.</p></div>
-            <div class="feature-card"><div class="feature-icon">🚚</div><h3>Express Shipping</h3><p>Custom wheels built in 4-6 weeks. In-stock sets ship within 24 hours Australia-wide.</p></div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <h3>Forged Monoblock</h3>
+                <p>Aerospace-grade 6061-T6 aluminum forged under 10,000 tons. Lighter, stronger, more responsive.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m4.22-10.22l4.24-4.24M6.34 17.66l-4.24 4.24M23 12h-6m-6 0H1m20.24 4.24l-4.24-4.24M6.34 6.34L2.1 2.1"/></svg>
+                </div>
+                <h3>Custom Fitment</h3>
+                <p>Precision-engineered for your vehicle. Custom offsets, widths, and bolt patterns available.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <h3>TÜV Certified</h3>
+                <p>Every design undergoes rigorous testing. JWL, VIA, and TÜV certified for safety and quality.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 15v4m0-4v4m18-4v4m0-4v4M7 15v4m0-4v4m10-4v4m0-4v4M7 11l5-5 5 5M12 4v12"/></svg>
+                </div>
+                <h3>900kg Load Rated</h3>
+                <p>Track-proven strength. From daily driving to track days, our wheels handle it all.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <h3>Any Finish</h3>
+                <p>Brushed, polished, gloss, matte, or custom. Powder coat or ceramic coat options.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <h3>Express Shipping</h3>
+                <p>Custom wheels built in 4-6 weeks. In-stock sets ship within 24 hours Australia-wide.</p>
+            </div>
         </div>
     </section>
 
     <section class="products" id="products">
-        <div class="deco-rim deco-rim-1"><img src="Mountain_bike_tyre_design_render_7f2bb73d4b.png" alt=""></div>
-        <div class="deco-rim deco-rim-2"><img src="Mountain_bike_tyre_design_render_f3efe22e9d.png" alt=""></div>
-        <div class="deco-rim deco-rim-3"><img src="Mountain_bike_wheel_side_view_c5c1b5a5ac.png" alt=""></div>
+        <div class="deco-rim deco-rim-1"><img src="Car_rim_in_black_void_4c090b5fcb.png" alt=""></div>
+        <div class="deco-rim deco-rim-2"><img src="Car_rim_in_black_void_6524cde58f.png" alt=""></div>
         
         <div class="products-header">
             <div><div class="section-eyebrow">Collection</div><h2>Featured <em>Styles</em></h2></div>
-            <a href="#products" class="btn btn-secondary">View All →</a>
+            <a href="#products" class="btn btn-secondary">
+                View All
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
         </div>
         <div class="products-grid">
             <div class="product-card">
-                <div class="product-image"><img src="biketyre.jpeg" alt="RF-01 Phantom"><div class="quick-view">Quick View</div></div>
+                <div class="product-image"><img src="Car_rim_in_black_void_4c090b5fcb.png" alt="RF-01 Phantom"><div class="quick-view">Quick View</div></div>
                 <div class="product-info">
-                    <div class="product-meta"><div class="product-category">Deep Concave</div><div class="product-rating">★★★★★</div></div>
+                    <div class="product-meta">
+                        <div class="product-category">Deep Concave</div>
+                        <div class="product-rating">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                    </div>
                     <div class="product-name">RF-01 Phantom</div>
                     <div class="product-specs">18-24" • 5x112/114.3 • 8.5-12J</div>
-                    <div class="product-footer"><div class="product-price">$2,899</div><button class="add-to-cart">+</button></div>
+                    <div class="product-footer">
+                        <div class="product-price">$2,899</div>
+                        <button class="add-to-cart">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="product-card">
-                <div class="product-image"><img src="Mountain_bike_tyre_design_render_7f2bb73d4b.png" alt="RF-02 Vortex"><div class="quick-view">Quick View</div></div>
+                <div class="product-image"><img src="Car_rim_in_black_void_6524cde58f.png" alt="RF-02 Vortex"><div class="quick-view">Quick View</div></div>
                 <div class="product-info">
-                    <div class="product-meta"><div class="product-category">Split Spoke</div><div class="product-rating">★★★★★</div></div>
+                    <div class="product-meta">
+                        <div class="product-category">Split Spoke</div>
+                        <div class="product-rating">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                    </div>
                     <div class="product-name">RF-02 Vortex</div>
                     <div class="product-specs">19-22" • 5x112/120 • 9-11J</div>
-                    <div class="product-footer"><div class="product-price">$3,199</div><button class="add-to-cart">+</button></div>
+                    <div class="product-footer">
+                        <div class="product-price">$3,199</div>
+                        <button class="add-to-cart">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="product-card">
-                <div class="product-image"><img src="Mountain_bike_tyre_design_render_f3efe22e9d.png" alt="RF-03 Titan"><div class="quick-view">Quick View</div></div>
+                <div class="product-image"><img src="Premium_car_tyre_black_void_6e2eb8c193.png" alt="RF-03 Titan"><div class="quick-view">Quick View</div></div>
                 <div class="product-info">
-                    <div class="product-meta"><div class="product-category">Multi Spoke</div><div class="product-rating">★★★★★</div></div>
+                    <div class="product-meta">
+                        <div class="product-category">Multi Spoke</div>
+                        <div class="product-rating">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                    </div>
                     <div class="product-name">RF-03 Titan</div>
                     <div class="product-specs">19-23" • 5x114.3/130 • 8.5-11J</div>
-                    <div class="product-footer"><div class="product-price">$2,599</div><button class="add-to-cart">+</button></div>
+                    <div class="product-footer">
+                        <div class="product-price">$2,599</div>
+                        <button class="add-to-cart">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="product-card">
-                <div class="product-image"><img src="Mountain_bike_wheel_side_view_c5c1b5a5ac.png" alt="RF-04 Stealth"><div class="quick-view">Quick View</div></div>
+                <div class="product-image"><img src="Premium_car_tyre_black_void_942e6b24ab.png" alt="RF-04 Stealth"><div class="quick-view">Quick View</div></div>
                 <div class="product-info">
-                    <div class="product-meta"><div class="product-category">Mesh Design</div><div class="product-rating">★★★★☆</div></div>
+                    <div class="product-meta">
+                        <div class="product-category">Mesh Design</div>
+                        <div class="product-rating">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                    </div>
                     <div class="product-name">RF-04 Stealth</div>
                     <div class="product-specs">18-22" • 5x112/120 • 8-10.5J</div>
-                    <div class="product-footer"><div class="product-price">$2,799</div><button class="add-to-cart">+</button></div>
+                    <div class="product-footer">
+                        <div class="product-price">$2,799</div>
+                        <button class="add-to-cart">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="cta">
-        <div class="cta-bg-rim"><img src="biketyre.jpeg" alt=""></div>
+        <div class="cta-bg-rim"><img src="Car_rim_in_black_void_4c090b5fcb.png" alt=""></div>
         <div class="cta-content">
             <h2>Ready to <em>transform</em><br>your ride?</h2>
             <p>Configure your perfect fitment. From daily driver to track weapon, we build wheels that perform.</p>
-            <a href="#products" class="btn btn-primary">Build Your Set →</a>
+            <a href="#products" class="btn btn-primary">
+                Build Your Set
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
         </div>
     </section>
 
-    <section class="email-capture">
+    <section class="email-capture" id="contact">
         <div class="email-capture-content">
             <h3>Join the Garage</h3>
             <p>Subscribe for exclusive offers, new releases, and fitment guides.</p>
@@ -295,12 +428,45 @@
     
     <footer>
         <div class="footer-grid">
-            <div class="footer-brand"><a href="#" class="nav-logo">RIMFORGE</a><p>Premium forged wheels engineered for performance. Aerospace-grade aluminum, TÜV certified, perfect fitment.</p></div>
-            <div><div class="footer-title">Shop</div><ul class="footer-links"><li><a href="#products">Deep Concave</a></li><li><a href="#products">Split Spoke</a></li><li><a href="#products">Multi Spoke</a></li><li><a href="#products">Mesh Design</a></li></ul></div>
-            <div><div class="footer-title">Support</div><ul class="footer-links"><li><a href="#">Fitment Guide</a></li><li><a href="#">Warranty</a></li><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li></ul></div>
-            <div><div class="footer-title">Company</div><ul class="footer-links"><li><a href="#">About</a></li><li><a href="#">Technology</a></li><li><a href="#">Contact</a></li></ul></div>
+            <div class="footer-brand">
+                <a href="#" class="nav-logo">RIMFORGE</a>
+                <p>Premium forged wheels engineered for performance. Aerospace-grade aluminum, TÜV certified, perfect fitment.</p>
+            </div>
+            <div>
+                <div class="footer-title">Shop</div>
+                <ul class="footer-links">
+                    <li><a href="#products">Deep Concave</a></li>
+                    <li><a href="#products">Split Spoke</a></li>
+                    <li><a href="#products">Multi Spoke</a></li>
+                    <li><a href="#products">Mesh Design</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="footer-title">Support</div>
+                <ul class="footer-links">
+                    <li><a href="#">Fitment Guide</a></li>
+                    <li><a href="#">Warranty</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="footer-title">Company</div>
+                <ul class="footer-links">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#features">Technology</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="footer-bottom"><p>© 2026 RimForge</p><div class="social-links"><a href="#">IG</a><a href="#">FB</a><a href="#">YT</a></div></div>
+        <div class="footer-bottom">
+            <p>© 2026 RimForge</p>
+            <div class="social-links">
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="#">YouTube</a>
+            </div>
+        </div>
     </footer>
 
     <script>
@@ -326,13 +492,9 @@
                 const productName = card.querySelector('.product-name').textContent;
                 const productPrice = card.querySelector('.product-price').textContent;
                 alert(`Added ${productName} (${productPrice}) to cart!`);
-                this.textContent = '✓';
-                this.style.background = '#4CAF50';
-                this.style.borderColor = '#4CAF50';
+                this.classList.add('added');
                 setTimeout(() => {
-                    this.textContent = '+';
-                    this.style.background = '';
-                    this.style.borderColor = '';
+                    this.classList.remove('added');
                 }, 2000);
             });
         });
