@@ -10,6 +10,13 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { font-size: clamp(14px, 1vw, 18px); }
         body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        /* Loader */
+        .loader { position: fixed; inset: 0; background: var(--black); display: flex; align-items: center; justify-content: center; z-index: 99999; transition: opacity 0.6s; }
+        .loader.hidden { opacity: 0; pointer-events: none; }
+        .loader-text { font-family: 'Cormorant Garamond', serif; font-size: 2rem; letter-spacing: 0.3em; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+        
+        /* Nav */
         .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center; transition: all 0.6s; }
         .nav.scrolled { background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); padding: 1.25rem 5vw; }
         .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; letter-spacing: 0.15em; text-decoration: none; color: var(--white); }
@@ -37,6 +44,9 @@
         .hero-stats { display: flex; gap: 5rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
         .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 400; color: var(--white); line-height: 1; }
         .stat-label { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray-500); margin-top: 0.5rem; }
+        
+        .trust-badges { display: flex; gap: 2rem; margin-top: 2rem; }
+        .trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--gray-400); }
         
         /* Floating tyre - decorative object */
         .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; height: 100%; min-height: 500px; }
@@ -86,8 +96,16 @@
         
         .products-header { display: flex; justify-content: space-between; align-items: flex-end; max-width: 1200px; margin: 0 auto 3rem; position: relative; z-index: 1; }
         .products-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; position: relative; z-index: 1; }
-        .product-card { background: #0A0A0A; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; transition: all 0.5s; }
+        .product-card { background: #0A0A0A; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; transition: all 0.5s; cursor: pointer; position: relative; }
         .product-card:hover { border-color: rgba(255,87,34,0.3); transform: translateY(-12px); background: #111; }
+        .quick-view { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%) translateY(20px); background: rgba(255,87,34,0.9); color: var(--black); padding: 0.625rem 1.5rem; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; transition: all 0.4s; pointer-events: none; }
+        .product-card:hover .quick-view { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .product-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+        .product-rating { font-size: 0.75rem; color: var(--orange); }
+        .product-specs { font-size: 0.8125rem; color: var(--gray-400); margin-bottom: 1rem; }
+        .product-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .add-to-cart { width: 44px; height: 44px; background: transparent; border: 1px solid var(--gray-500); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; font-size: 1.25rem; color: var(--white); }
+        .add-to-cart:hover { background: var(--orange); border-color: var(--orange); color: var(--black); }
         .product-image { aspect-ratio: 1; background: #050505; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
         .product-image img { width: 80%; height: 80%; object-fit: contain; transition: transform 0.5s; }
         .product-card:hover .product-image img { transform: scale(1.08); }
@@ -104,6 +122,15 @@
         .cta-content { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
         .cta h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 1.5rem; }
         .cta p { font-size: 1.25rem; color: var(--gray-300); margin-bottom: 2.5rem; font-weight: 300; line-height: 1.8; }
+        
+        .email-capture { padding: 6rem 5vw; background: linear-gradient(180deg, transparent, rgba(255,87,34,0.03), transparent); text-align: center; }
+        .email-capture-content { max-width: 600px; margin: 0 auto; }
+        .email-capture h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 0.75rem; }
+        .email-capture p { color: var(--gray-300); font-size: 1rem; margin-bottom: 2rem; }
+        .email-form { display: flex; gap: 1rem; max-width: 500px; margin: 0 auto; }
+        .email-input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1rem 1.5rem; color: var(--white); font-size: 0.9375rem; transition: all 0.3s; }
+        .email-input:focus { outline: none; border-color: var(--orange); background: rgba(255,255,255,0.08); }
+        .email-input::placeholder { color: var(--gray-500); }
         
         footer { padding: 5rem 5vw 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
         .footer-grid { max-width: 1200px; margin: 0 auto 4rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; }
@@ -123,6 +150,10 @@
     </style>
 </head>
 <body>
+    <div class="loader" id="loader">
+        <div class="loader-text">TYREFLOW</div>
+    </div>
+    
     <nav class="nav" id="nav">
         <a href="#" class="nav-logo">TYREFLOW</a>
         <ul class="nav-links">
@@ -150,6 +181,11 @@
                     <div class="stat-item"><div class="stat-value">50+</div><div class="stat-label">Models</div></div>
                     <div class="stat-item"><div class="stat-value">12k</div><div class="stat-label">Riders</div></div>
                     <div class="stat-item"><div class="stat-value">24h</div><div class="stat-label">Dispatch</div></div>
+                </div>
+                <div class="trust-badges">
+                    <div class="trust-item">★ Free Shipping $100+</div>
+                    <div class="trust-item">★ 30-Day Returns</div>
+                    <div class="trust-item">★ Expert Support</div>
                 </div>
             </div>
             <div class="hero-visual">
@@ -213,20 +249,76 @@
         </div>
         <div class="products-grid">
             <div class="product-card">
-                <div class="product-image"><img src="biketyre.jpeg" alt="FlowSpeed Pro"></div>
-                <div class="product-info"><div class="product-category">Road Racing</div><div class="product-name">FlowSpeed Pro 700c</div><div class="product-price">$89.99</div></div>
+                <div class="product-image">
+                    <img src="biketyre.jpeg" alt="FlowSpeed Pro">
+                    <div class="quick-view">Quick View</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-meta">
+                        <div class="product-category">Road Racing</div>
+                        <div class="product-rating">★★★★★</div>
+                    </div>
+                    <div class="product-name">FlowSpeed Pro 700c</div>
+                    <div class="product-specs">700c × 25mm • 220g • Tubeless</div>
+                    <div class="product-footer">
+                        <div class="product-price">$89.99</div>
+                        <button class="add-to-cart">+</button>
+                    </div>
+                </div>
             </div>
             <div class="product-card">
-                <div class="product-image"><img src="biketyre.jpeg" alt="TrailBlazer"></div>
-                <div class="product-info"><div class="product-category">Mountain</div><div class="product-name">TrailBlazer MTB 29"</div><div class="product-price">$79.99</div></div>
+                <div class="product-image">
+                    <img src="biketyre.jpeg" alt="TrailBlazer">
+                    <div class="quick-view">Quick View</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-meta">
+                        <div class="product-category">Mountain</div>
+                        <div class="product-rating">★★★★★</div>
+                    </div>
+                    <div class="product-name">TrailBlazer MTB 29"</div>
+                    <div class="product-specs">29" × 2.3" • 850g • Puncture Proof</div>
+                    <div class="product-footer">
+                        <div class="product-price">$79.99</div>
+                        <button class="add-to-cart">+</button>
+                    </div>
+                </div>
             </div>
             <div class="product-card">
-                <div class="product-image"><img src="biketyre.jpeg" alt="AllRoad"></div>
-                <div class="product-info"><div class="product-category">Gravel</div><div class="product-name">AllRoad Explorer</div><div class="product-price">$69.99</div></div>
+                <div class="product-image">
+                    <img src="biketyre.jpeg" alt="AllRoad">
+                    <div class="quick-view">Quick View</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-meta">
+                        <div class="product-category">Gravel</div>
+                        <div class="product-rating">★★★★☆</div>
+                    </div>
+                    <div class="product-name">AllRoad Explorer</div>
+                    <div class="product-specs">700c × 40mm • 450g • Tubeless</div>
+                    <div class="product-footer">
+                        <div class="product-price">$69.99</div>
+                        <button class="add-to-cart">+</button>
+                    </div>
+                </div>
             </div>
             <div class="product-card">
-                <div class="product-image"><img src="biketyre.jpeg" alt="CityGlide"></div>
-                <div class="product-info"><div class="product-category">Urban</div><div class="product-name">CityGlide Commuter</div><div class="product-price">$49.99</div></div>
+                <div class="product-image">
+                    <img src="biketyre.jpeg" alt="CityGlide">
+                    <div class="quick-view">Quick View</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-meta">
+                        <div class="product-category">Urban</div>
+                        <div class="product-rating">★★★★★</div>
+                    </div>
+                    <div class="product-name">CityGlide Commuter</div>
+                    <div class="product-specs">700c × 32mm • 380g • Reflective</div>
+                    <div class="product-footer">
+                        <div class="product-price">$49.99</div>
+                        <button class="add-to-cart">+</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -242,6 +334,17 @@
         </div>
     </section>
 
+    <section class="email-capture">
+        <div class="email-capture-content">
+            <h3>Join the Ride</h3>
+            <p>Subscribe for exclusive offers, new releases, and cycling tips.</p>
+            <form class="email-form" onsubmit="event.preventDefault(); alert('Thanks for subscribing!');">
+                <input type="email" placeholder="Your email address" class="email-input" required>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </section>
+    
     <footer>
         <div class="footer-grid">
             <div class="footer-brand"><a href="#" class="nav-logo">TYREFLOW</a><p>Premium bicycle tyres engineered for performance. Race-proven compounds, superior grip.</p></div>
@@ -253,10 +356,47 @@
     </footer>
 
     <script>
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 800);
+        });
+        
+        // Nav scroll
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('nav');
             if (window.scrollY > 100) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
+        });
+        
+        // Add to cart buttons
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const card = this.closest('.product-card');
+                const productName = card.querySelector('.product-name').textContent;
+                const productPrice = card.querySelector('.product-price').textContent;
+                alert(`Added ${productName} (${productPrice}) to cart!`);
+                this.textContent = '✓';
+                this.style.background = '#4CAF50';
+                this.style.borderColor = '#4CAF50';
+                setTimeout(() => {
+                    this.textContent = '+';
+                    this.style.background = '';
+                    this.style.borderColor = '';
+                }, 2000);
+            });
+        });
+        
+        // Quick view
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (!e.target.closest('.add-to-cart') && !e.target.closest('.quick-view')) {
+                    const productName = this.querySelector('.product-name').textContent;
+                    alert(`Quick view: ${productName}\n\nProduct details would open here.`);
+                }
+            });
         });
     </script>
 </body>
