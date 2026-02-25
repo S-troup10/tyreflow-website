@@ -1,8 +1,8 @@
 const axios = require('axios');
 const fs = require('fs');
 
-const API_KEY = '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';
-const API_PASSWORD = 'ec9bfa972d507b5860d69d7eba41692a';
+const API_KEY = process.env.SHOPIFY_API_KEY || 'YOUR_API_KEY_HERE';
+const API_PASSWORD = process.env.SHOPIFY_API_PASSWORD || 'YOUR_API_PASSWORD_HERE';
 const SHOP_DOMAIN = 'tyreflow.myshopify.com';
 const BASE_URL = `https://${SHOP_DOMAIN}/admin/api/2024-01`;
 
