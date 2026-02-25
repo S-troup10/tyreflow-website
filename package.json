@@ -1,0 +1,11 @@
+{
+  "name": "tyreflow-website",
+  "version": "1.0.0",
+  "description": "TyreFlow - Premium bike tyres landing page",
+  "scripts": {
+    "deploy": "gh-pages -d ."
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
+  }
+}
