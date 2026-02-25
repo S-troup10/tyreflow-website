@@ -3,128 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TyreFlow — Precision Rubber. Engineered Speed.</title>
+    <title>RimForge — Precision Forged. Performance Driven.</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root { --orange: #FF5722; --black: #000000; --white: #FFFFFF; --gray-300: #B0B0B0; --gray-500: #606060; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { font-size: clamp(14px, 1vw, 18px); }
         body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-        /* Loader */
+        
         .loader { position: fixed; inset: 0; background: var(--black); display: flex; align-items: center; justify-content: center; z-index: 99999; transition: opacity 0.6s; }
         .loader.hidden { opacity: 0; pointer-events: none; }
         .loader-text { font-family: 'Cormorant Garamond', serif; font-size: 2rem; letter-spacing: 0.3em; animation: pulse 2s infinite; }
         @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
         
-        /* Nav */
         .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center; transition: all 0.6s; }
-        .nav.scrolled { background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); padding: 1.25rem 5vw; }
-        .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; letter-spacing: 0.15em; text-decoration: none; color: var(--white); }
+        .nav.scrolled { background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); padding: 1.25rem 5vw; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 600; letter-spacing: 0.2em; text-decoration: none; color: var(--white); }
         .nav-links { display: flex; gap: 3rem; list-style: none; }
         .nav-links a { color: var(--gray-300); text-decoration: none; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; transition: color 0.3s; }
         .nav-links a:hover { color: var(--orange); }
         .nav-cta { color: var(--white); padding: 0.75rem 1.5rem; text-decoration: none; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid var(--gray-500); transition: all 0.4s; }
-        .nav-cta:hover { border-color: var(--orange); color: var(--orange); }
+        .nav-cta:hover { border-color: var(--orange); background: var(--orange); color: var(--black); }
         
-        /* Hero with floating tyre */
-        .hero { min-height: 100vh; display: flex; align-items: center; padding: 8rem 5vw 4rem; position: relative; overflow: hidden; }
-        .hero-content { max-width: 1400px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-        .hero-text { position: relative; z-index: 2; }
-        .hero-eyebrow { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--orange); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
-        .hero-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--orange); }
-        h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 7vw, 6rem); font-weight: 400; line-height: 1; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
-        h1 .line { display: block; opacity: 0; transform: translateY(30px); animation: reveal-text 1s forwards; }
+        .hero { min-height: 100vh; display: flex; align-items: center; padding: 10rem 5vw 6rem; position: relative; overflow: hidden; }
+        .hero-content { max-width: 1400px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.75rem; background: rgba(255,87,34,0.1); border: 1px solid rgba(255,87,34,0.2); padding: 0.625rem 1.25rem; border-radius: 100px; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); margin-bottom: 2rem; }
+        .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--orange); border-radius: 50%; animation: blink 2s infinite; }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+        
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 7vw, 6.5rem); font-weight: 400; line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+        h1 .line { display: block; opacity: 0; transform: translateY(40px); animation: reveal-text 1s forwards; }
         h1 .line:nth-child(1) { animation-delay: 0.2s; } h1 .line:nth-child(2) { animation-delay: 0.4s; color: var(--orange); font-style: italic; } h1 .line:nth-child(3) { animation-delay: 0.6s; }
         @keyframes reveal-text { to { opacity: 1; transform: translateY(0); } }
-        .hero-subtitle { font-size: 1.125rem; color: var(--gray-300); max-width: 450px; margin-bottom: 2.5rem; line-height: 1.8; font-weight: 300; }
+        
+        .hero-subtitle { font-size: 1.25rem; color: var(--gray-300); max-width: 500px; margin-bottom: 2.5rem; line-height: 1.9; font-weight: 300; }
         .hero-buttons { display: flex; gap: 1rem; }
-        .btn { display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 2rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: all 0.4s; cursor: pointer; border: none; }
-        .btn-primary { background: var(--orange); color: var(--black); } .btn-primary:hover { background: #FF7043; transform: translateY(-2px); box-shadow: 0 20px 40px rgba(255,87,34,0.3); }
-        .btn-secondary { background: transparent; color: var(--white); border: 1px solid var(--gray-500); } .btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+        .btn { display: inline-flex; align-items: center; gap: 0.75rem; padding: 1.125rem 2.25rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: all 0.4s; cursor: pointer; border: none; }
+        .btn-primary { background: var(--orange); color: var(--black); } .btn-primary:hover { background: #FF7043; transform: translateY(-3px); box-shadow: 0 25px 50px rgba(255,87,34,0.4); }
+        .btn-secondary { background: transparent; color: var(--white); border: 1px solid var(--gray-500); } .btn-secondary:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-3px); }
+        
         .hero-stats { display: flex; gap: 5rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
-        .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 400; color: var(--white); line-height: 1; }
+        .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 400; color: var(--white); line-height: 1; }
         .stat-label { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray-500); margin-top: 0.5rem; }
+        .trust-badges { display: flex; gap: 2.5rem; margin-top: 2.5rem; flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--gray-400); }
         
-        .trust-badges { display: flex; gap: 2rem; margin-top: 2rem; }
-        .trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--gray-400); }
+        .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; min-height: 600px; }
+        .hero-rim-main { position: relative; width: 100%; max-width: 550px; z-index: 3; animation: float 6s ease-in-out infinite; filter: drop-shadow(0 40px 80px rgba(255,87,34,0.25)); }
+        .hero-rim-main img { width: 100%; height: auto; display: block; }
+        .hero-rim-side { position: absolute; width: 280px; opacity: 0.15; z-index: 2; animation: drift-slow 25s infinite; }
+        .hero-rim-side.left { left: -60px; top: 10%; }
+        .hero-rim-side.right { right: -40px; bottom: 5%; animation-delay: -5s; }
+        .hero-rim-side img { width: 100%; height: auto; }
+        .hero-rim-back { position: absolute; width: 200px; opacity: 0.08; z-index: 1; }
+        .hero-rim-back.top-right { top: -30px; right: 10%; animation: drift 20s infinite reverse; }
+        .hero-rim-back img { width: 100%; height: auto; }
+        @keyframes float { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-20px) rotate(2deg); } }
+        @keyframes drift-slow { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-30px) rotate(5deg); } }
+        @keyframes drift { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(3deg); } }
+        .rim-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70%; height: 70%; background: radial-gradient(circle, rgba(255,87,34,0.2) 0%, transparent 70%); filter: blur(80px); animation: glow-pulse 4s infinite; pointer-events: none; }
+        @keyframes glow-pulse { 0%,100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.15); } }
         
-        /* Floating tyre - decorative object */
-        .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; height: 100%; min-height: 500px; }
-        .floating-tyre { position: relative; width: 100%; max-width: 600px; animation: float 6s ease-in-out infinite; }
-        .floating-tyre img { width: 100%; height: auto; display: block; }
-        @keyframes float { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-20px) rotate(1deg); } }
-        
-        /* Ambient glow behind tyre */
-        .tyre-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70%; height: 70%; background: radial-gradient(circle, rgba(255,87,34,0.15) 0%, transparent 70%); filter: blur(40px); animation: pulse 4s ease-in-out infinite; pointer-events: none; }
-        @keyframes pulse { 0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); } }
-        
-        /* Scroll indicator */
-        .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: var(--gray-500); font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
-        
-        /* Marquee */
-        .marquee-section { padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); background: #050505; overflow: hidden; }
-        .marquee-track { display: flex; animation: marquee 30s linear infinite; }
+        .marquee-section { padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); background: linear-gradient(90deg, transparent, rgba(255,87,34,0.03), transparent); overflow: hidden; }
+        .marquee-track { display: flex; animation: marquee 40s linear infinite; }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        .marquee-content { display: flex; gap: 4rem; padding: 0 2rem; white-space: nowrap; }
-        .marquee-item { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gray-500); }
+        .marquee-content { display: flex; gap: 5rem; padding: 0 2.5rem; white-space: nowrap; }
+        .marquee-item { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gray-400); }
         
-        /* Features */
-        .features { padding: 10rem 5vw; position: relative; }
-        .section-header { text-align: center; max-width: 700px; margin: 0 auto 5rem; }
-        .section-eyebrow { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--orange); margin-bottom: 1rem; }
-        h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; line-height: 1.1; margin-bottom: 1rem; }
+        .features { padding: 10rem 5vw; }
+        .section-header { text-align: center; max-width: 700px; margin: 0 auto 6rem; }
+        .section-eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,87,34,0.3); display: inline-block; }
+        h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 400; line-height: 1.05; margin-bottom: 1.5rem; }
         h2 em { font-style: italic; color: var(--orange); }
-        .section-subtitle { color: var(--gray-300); font-size: 1.125rem; font-weight: 300; line-height: 1.8; }
+        .section-subtitle { color: var(--gray-300); font-size: 1.125rem; font-weight: 300; line-height: 1.9; }
         .features-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-        .feature-card { background: #0A0A0A; border: 1px solid rgba(255,255,255,0.05); padding: 2.5rem; transition: all 0.5s; }
-        .feature-card:hover { border-color: rgba(255,87,34,0.3); transform: translateY(-8px); background: #111; }
-        .feature-number { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 400; color: rgba(255,87,34,0.3); margin-bottom: 1rem; }
-        h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem; }
-        .feature-card p { color: var(--gray-300); font-size: 0.875rem; line-height: 1.7; font-weight: 300; }
+        .feature-card { background: rgba(10,10,10,0.6); border: 1px solid rgba(255,255,255,0.06); padding: 2.5rem; backdrop-filter: blur(10px); transition: all 0.5s; position: relative; overflow: hidden; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--orange), transparent); transform: scaleX(0); transition: transform 0.6s; }
+        .feature-card:hover { border-color: rgba(255,87,34,0.2); transform: translateY(-10px); background: rgba(17,17,17,0.8); }
+        .feature-card:hover::before { transform: scaleX(1); }
+        .feature-icon { width: 56px; height: 56px; background: rgba(255,87,34,0.1); border: 1px solid rgba(255,87,34,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.5rem; transition: all 0.4s; }
+        .feature-card:hover .feature-icon { background: rgba(255,87,34,0.2); transform: scale(1.1); }
+        h3 { font-size: 1.25rem; font-weight: 500; margin-bottom: 0.875rem; }
+        .feature-card p { color: var(--gray-300); font-size: 0.9375rem; line-height: 1.7; font-weight: 300; }
         
-        /* Products - floating tyres as decoration */
         .products { padding: 10rem 5vw; position: relative; overflow: hidden; }
-        
-        /* Decorative floating tyres */
-        .decorative-tyre { position: absolute; opacity: 0.08; pointer-events: none; }
-        .decorative-tyre img { width: 100%; height: auto; }
-        .decorative-tyre-1 { top: 5%; left: -5%; width: 300px; animation: drift 20s infinite; }
-        .decorative-tyre-2 { bottom: 10%; right: -8%; width: 400px; animation: drift 25s infinite reverse; }
-        .decorative-tyre-3 { top: 40%; right: 5%; width: 200px; animation: drift 18s infinite; }
-        @keyframes drift { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-30px) rotate(3deg); } }
-        
-        .products-header { display: flex; justify-content: space-between; align-items: flex-end; max-width: 1200px; margin: 0 auto 3rem; position: relative; z-index: 1; }
+        .deco-rim { position: absolute; opacity: 0.05; pointer-events: none; filter: grayscale(100%); }
+        .deco-rim img { width: 100%; height: auto; }
+        .deco-rim-1 { top: 5%; left: -10%; width: 400px; animation: drift 30s infinite; }
+        .deco-rim-2 { bottom: 10%; right: -12%; width: 500px; animation: drift 35s infinite reverse; }
+        .deco-rim-3 { top: 50%; right: 0%; width: 300px; animation: drift 25s infinite; }
+        .products-header { display: flex; justify-content: space-between; align-items: flex-end; max-width: 1200px; margin: 0 auto 4rem; position: relative; z-index: 1; }
         .products-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; position: relative; z-index: 1; }
-        .product-card { background: #0A0A0A; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; transition: all 0.5s; cursor: pointer; position: relative; }
-        .product-card:hover { border-color: rgba(255,87,34,0.3); transform: translateY(-12px); background: #111; }
+        .product-card { background: rgba(5,5,5,0.8); border: 1px solid rgba(255,255,255,0.05); overflow: hidden; transition: all 0.5s; cursor: pointer; position: relative; }
+        .product-card:hover { border-color: rgba(255,87,34,0.3); transform: translateY(-15px); box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
+        .product-image { aspect-ratio: 1; background: linear-gradient(135deg, #080808, #050505); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 2rem; }
+        .product-image img { width: 100%; height: 100%; object-fit: contain; transition: all 0.6s; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5)); }
+        .product-card:hover .product-image img { transform: scale(1.08) rotate(-3deg); }
         .quick-view { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%) translateY(20px); background: rgba(255,87,34,0.9); color: var(--black); padding: 0.625rem 1.5rem; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; transition: all 0.4s; pointer-events: none; }
         .product-card:hover .quick-view { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .product-info { padding: 1.75rem; border-top: 1px solid rgba(255,255,255,0.05); }
         .product-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+        .product-category { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); }
         .product-rating { font-size: 0.75rem; color: var(--orange); }
+        .product-name { font-family: 'Cormorant Garamond', serif; font-size: 1.375rem; font-weight: 500; margin-bottom: 0.5rem; }
         .product-specs { font-size: 0.8125rem; color: var(--gray-400); margin-bottom: 1rem; }
         .product-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .product-price { font-size: 1.25rem; font-weight: 600; color: var(--white); }
         .add-to-cart { width: 44px; height: 44px; background: transparent; border: 1px solid var(--gray-500); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; font-size: 1.25rem; color: var(--white); }
         .add-to-cart:hover { background: var(--orange); border-color: var(--orange); color: var(--black); }
-        .product-image { aspect-ratio: 1; background: #050505; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-        .product-image img { width: 80%; height: 80%; object-fit: contain; transition: transform 0.5s; }
-        .product-card:hover .product-image img { transform: scale(1.08); }
-        .product-info { padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
-        .product-category { font-size: 0.625rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.5rem; }
-        .product-name { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .product-price { font-size: 1.125rem; font-weight: 600; color: var(--white); }
         
-        /* CTA with floating tyre */
-        .cta { padding: 10rem 5vw; text-align: center; position: relative; overflow: hidden; }
-        .cta-tyre { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; opacity: 0.06; pointer-events: none; }
-        .cta-tyre img { width: 100%; height: auto; animation: slow-rotate 60s linear infinite; }
-        @keyframes slow-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .cta { padding: 12rem 5vw; text-align: center; position: relative; overflow: hidden; }
+        .cta-bg-rim { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; opacity: 0.04; pointer-events: none; animation: slow-spin 100s linear infinite; }
+        @keyframes slow-spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
         .cta-content { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
         .cta h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 1.5rem; }
         .cta p { font-size: 1.25rem; color: var(--gray-300); margin-bottom: 2.5rem; font-weight: 300; line-height: 1.8; }
         
         .email-capture { padding: 6rem 5vw; background: linear-gradient(180deg, transparent, rgba(255,87,34,0.03), transparent); text-align: center; }
-        .email-capture-content { max-width: 600px; margin: 0 auto; }
         .email-capture h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 0.75rem; }
         .email-capture p { color: var(--gray-300); font-size: 1rem; margin-bottom: 2rem; }
         .email-form { display: flex; gap: 1rem; max-width: 500px; margin: 0 auto; }
@@ -132,212 +127,165 @@
         .email-input:focus { outline: none; border-color: var(--orange); background: rgba(255,255,255,0.08); }
         .email-input::placeholder { color: var(--gray-500); }
         
-        footer { padding: 5rem 5vw 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        footer { padding: 5rem 5vw 2rem; border-top: 1px solid rgba(255,255,255,0.05); background: linear-gradient(180deg, transparent, rgba(255,255,255,0.01)); }
         .footer-grid { max-width: 1200px; margin: 0 auto 4rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; }
         .footer-brand p { color: var(--gray-300); font-size: 0.875rem; line-height: 1.8; font-weight: 300; }
         .footer-title { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 1.5rem; }
         .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
-        .footer-links a { color: var(--gray-300); text-decoration: none; font-size: 0.875rem; font-weight: 300; transition: color 0.3s; }
-        .footer-links a:hover { color: var(--orange); }
+        .footer-links a { color: var(--gray-300); text-decoration: none; font-size: 0.875rem; font-weight: 300; transition: all 0.3s; }
+        .footer-links a:hover { color: var(--orange); padding-left: 0.5rem; }
         .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
         .footer-bottom p { color: var(--gray-500); font-size: 0.75rem; }
         .social-links { display: flex; gap: 1rem; }
         .social-links a { color: var(--gray-300); text-decoration: none; font-size: 0.875rem; transition: color 0.3s; }
         .social-links a:hover { color: var(--orange); }
         
-        @media (max-width: 1024px) { .hero-content { grid-template-columns: 1fr; text-align: center; } .hero-subtitle { margin-left: auto; margin-right: auto; } .hero-buttons { justify-content: center; } .hero-stats { justify-content: center; } .features-grid { grid-template-columns: repeat(2, 1fr); } .products-grid { grid-template-columns: repeat(2, 1fr); } .decorative-tyre { display: none; } .footer-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) { html { font-size: 14px; } .nav-links { display: none; } .hero { padding: 6rem 1.5rem 3rem; } .hero-stats { flex-direction: column; gap: 2rem; text-align: center; } .features-grid, .products-grid { grid-template-columns: 1fr; } .products-header { flex-direction: column; gap: 1rem; text-align: center; align-items: center; } .footer-grid { grid-template-columns: 1fr; gap: 3rem; } .footer-bottom { flex-direction: column; gap: 1.5rem; text-align: center; } .scroll-indicator { display: none; } .cta-tyre { width: 300px; } }
+        @media (max-width: 1024px) { .hero-content { grid-template-columns: 1fr; text-align: center; } .hero-rim-side, .hero-rim-back { display: none; } .hero-subtitle { margin-left: auto; margin-right: auto; } .hero-buttons { justify-content: center; } .features-grid { grid-template-columns: repeat(2, 1fr); } .products-grid { grid-template-columns: repeat(2, 1fr); } .deco-rim { display: none; } .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { html { font-size: 14px; } .nav-links { display: none; } .hero { padding: 6rem 1.5rem 3rem; } .hero-stats { flex-direction: column; gap: 2rem; text-align: center; } .features-grid, .products-grid { grid-template-columns: 1fr; } .email-form { flex-direction: column; } .footer-grid { grid-template-columns: 1fr; gap: 3rem; text-align: center; } .footer-bottom { flex-direction: column; gap: 1.5rem; } }
     </style>
 </head>
 <body>
-    <div class="loader" id="loader">
-        <div class="loader-text">TYREFLOW</div>
-    </div>
+    <div class="loader" id="loader"><div class="loader-text">RIMFORGE</div></div>
     
     <nav class="nav" id="nav">
-        <a href="#" class="nav-logo">TYREFLOW</a>
+        <a href="#" class="nav-logo">RIMFORGE</a>
         <ul class="nav-links">
             <li><a href="#features">Technology</a></li>
-            <li><a href="#products">Collection</a></li>
+            <li><a href="#products">Wheels</a></li>
         </ul>
-        <a href="https://tyreflow.myshopify.com" class="nav-cta">Shop Now</a>
+        <a href="#products" class="nav-cta">Configure Yours</a>
     </nav>
 
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <div class="hero-eyebrow">Precision Engineered</div>
+                <div class="hero-badge">Now Shipping Australia-Wide</div>
                 <h1>
-                    <span class="line">Premium</span>
-                    <span class="line">bicycle tyres.</span>
-                    <span class="line">Uncompromised.</span>
+                    <span class="line">Forged</span>
+                    <span class="line">performance.</span>
+                    <span class="line">Unrivaled.</span>
                 </h1>
-                <p class="hero-subtitle">Race-proven compounds meet industrial durability. Every tyre engineered for cyclists who demand perfection.</p>
+                <p class="hero-subtitle">Aerospace-grade forged wheels engineered for the street. Monoblock construction, precision fitment, legendary style.</p>
                 <div class="hero-buttons">
-                    <a href="https://tyreflow.myshopify.com" class="btn btn-primary">Explore Collection →</a>
-                    <a href="#features" class="btn btn-secondary">Learn More</a>
+                    <a href="#products" class="btn btn-primary">Explore Collection →</a>
+                    <a href="#features" class="btn btn-secondary">Our Process</a>
                 </div>
                 <div class="hero-stats">
-                    <div class="stat-item"><div class="stat-value">50+</div><div class="stat-label">Models</div></div>
-                    <div class="stat-item"><div class="stat-value">12k</div><div class="stat-label">Riders</div></div>
-                    <div class="stat-item"><div class="stat-value">24h</div><div class="stat-label">Dispatch</div></div>
+                    <div class="stat-item"><div class="stat-value">15+</div><div class="stat-label">Styles</div></div>
+                    <div class="stat-item"><div class="stat-value">8k</div><div class="stat-label">Sets Sold</div></div>
+                    <div class="stat-item"><div class="stat-value">TÜV</div><div class="stat-label">Certified</div></div>
                 </div>
                 <div class="trust-badges">
-                    <div class="trust-item">★ Free Shipping $100+</div>
-                    <div class="trust-item">★ 30-Day Returns</div>
-                    <div class="trust-item">★ Expert Support</div>
+                    <div class="trust-item">⚡ Lifetime Warranty</div>
+                    <div class="trust-item">⚡ Perfect Fitment Guarantee</div>
+                    <div class="trust-item">⚡ 0% Finance Available</div>
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="tyre-glow"></div>
-                <div class="floating-tyre">
-                    <img src="biketyre.jpeg" alt="TyreFlow Premium Tyre">
-                </div>
+                <div class="rim-glow"></div>
+                <div class="hero-rim-side left"><img src="Mountain_bike_tyre_design_render_7f2bb73d4b.png" alt="RimForge Wheel"></div>
+                <div class="hero-rim-back top-right"><img src="Mountain_bike_wheel_side_view_c5c1b5a5ac.png" alt="RimForge Wheel"></div>
+                <div class="hero-rim-side right"><img src="Mountain_bike_tyre_design_render_f3efe22e9d.png" alt="RimForge Wheel"></div>
+                <div class="hero-rim-main"><img src="biketyre.jpeg" alt="RimForge Forged Wheel"></div>
             </div>
         </div>
-        <div class="scroll-indicator">Scroll</div>
     </section>
 
     <div class="marquee-section">
         <div class="marquee-track">
             <div class="marquee-content">
-                <span class="marquee-item">Free Shipping Australia-Wide</span>
-                <span class="marquee-item">Race-Proven Performance</span>
-                <span class="marquee-item">Puncture Protection</span>
-                <span class="marquee-item">Sustainable Materials</span>
-                <span class="marquee-item">24-Hour Dispatch</span>
-                <span class="marquee-item">Free Shipping Australia-Wide</span>
-                <span class="marquee-item">Race-Proven Performance</span>
-                <span class="marquee-item">Puncture Protection</span>
-                <span class="marquee-item">Sustainable Materials</span>
-                <span class="marquee-item">24-Hour Dispatch</span>
+                <span class="marquee-item">TÜV Certified Safety</span>
+                <span class="marquee-item">Forged Monoblock Construction</span>
+                <span class="marquee-item">Load Rated to 900kg</span>
+                <span class="marquee-item">Custom Fitment Specialists</span>
+                <span class="marquee-item">Lifetime Warranty</span>
+                <span class="marquee-item">TÜV Certified Safety</span>
+                <span class="marquee-item">Forged Monoblock Construction</span>
+                <span class="marquee-item">Load Rated to 900kg</span>
+                <span class="marquee-item">Custom Fitment Specialists</span>
+                <span class="marquee-item">Lifetime Warranty</span>
             </div>
         </div>
     </div>
 
     <section class="features" id="features">
         <div class="section-header">
-            <div class="section-eyebrow">Why TyreFlow</div>
-            <h2>Engineered for<br><em>perfection</em></h2>
-            <p class="section-subtitle">Every tyre undergoes rigorous testing to ensure maximum grip, durability, and speed.</p>
+            <div class="section-eyebrow">Why RimForge</div>
+            <h2>Engineered for<br><em>performance</em></h2>
+            <p class="section-subtitle">Every wheel is TÜV certified and load-tested beyond industry standards. Precision engineering meets aggressive styling.</p>
         </div>
         <div class="features-grid">
-            <div class="feature-card"><div class="feature-number">01</div><h3>Speed Optimized</h3><p>Advanced rubber compounds reduce rolling resistance while maintaining superior cornering grip.</p></div>
-            <div class="feature-card"><div class="feature-number">02</div><h3>Puncture Protection</h3><p>Multi-layer Kevlar reinforcement provides exceptional defense against road debris.</p></div>
-            <div class="feature-card"><div class="feature-number">03</div><h3>All-Weather Grip</h3><p>Silica-infused tread patterns deliver exceptional performance in wet and dry conditions.</p></div>
-            <div class="feature-card"><div class="feature-number">04</div><h3>Eco-Friendly</h3><p>Sustainably sourced materials with recyclable packaging. Ride clean.</p></div>
-            <div class="feature-card"><div class="feature-number">05</div><h3>Pro Tested</h3><p>Trusted by competitive cyclists and weekend warriors alike.</p></div>
-            <div class="feature-card"><div class="feature-number">06</div><h3>Fast Shipping</h3><p>Orders dispatched within 24 hours. Free shipping over $100.</p></div>
+            <div class="feature-card"><div class="feature-icon">🔥</div><h3>Forged Monoblock</h3><p>Aerospace-grade 6061-T6 aluminum forged under 10,000 tons. Lighter, stronger, more responsive.</p></div>
+            <div class="feature-card"><div class="feature-icon">⚙️</div><h3>Custom Fitment</h3><p>Precision-engineered for your vehicle. Custom offsets, widths, and bolt patterns available.</p></div>
+            <div class="feature-card"><div class="feature-icon">🛡️</div><h3>TÜV Certified</h3><p>Every design undergoes rigorous testing. JWL, VIA, and TÜV certified for safety and quality.</p></div>
+            <div class="feature-card"><div class="feature-icon">⚡</div><h3>900kg Load Rated</h3><p>Track-proven strength. From daily driving to track days, our wheels handle it all.</p></div>
+            <div class="feature-card"><div class="feature-icon">✨</div><h3>Any Finish</h3><p>Brushed, polished, gloss, matte, or custom. Powder coat or ceramic coat options.</p></div>
+            <div class="feature-card"><div class="feature-icon">🚚</div><h3>Express Shipping</h3><p>Custom wheels built in 4-6 weeks. In-stock sets ship within 24 hours Australia-wide.</p></div>
         </div>
     </section>
 
     <section class="products" id="products">
-        <!-- Decorative floating tyres -->
-        <div class="decorative-tyre decorative-tyre-1">
-            <img src="biketyre.jpeg" alt="">
-        </div>
-        <div class="decorative-tyre decorative-tyre-2">
-            <img src="biketyre.jpeg" alt="">
-        </div>
-        <div class="decorative-tyre decorative-tyre-3">
-            <img src="biketyre.jpeg" alt="">
-        </div>
+        <div class="deco-rim deco-rim-1"><img src="Mountain_bike_tyre_design_render_7f2bb73d4b.png" alt=""></div>
+        <div class="deco-rim deco-rim-2"><img src="Mountain_bike_tyre_design_render_f3efe22e9d.png" alt=""></div>
+        <div class="deco-rim deco-rim-3"><img src="Mountain_bike_wheel_side_view_c5c1b5a5ac.png" alt=""></div>
         
         <div class="products-header">
-            <div><div class="section-eyebrow">Collection</div><h2>Featured <em>Products</em></h2></div>
-            <a href="https://tyreflow.myshopify.com" class="btn btn-secondary">View All →</a>
+            <div><div class="section-eyebrow">Collection</div><h2>Featured <em>Styles</em></h2></div>
+            <a href="#products" class="btn btn-secondary">View All →</a>
         </div>
         <div class="products-grid">
             <div class="product-card">
-                <div class="product-image">
-                    <img src="biketyre.jpeg" alt="FlowSpeed Pro">
-                    <div class="quick-view">Quick View</div>
-                </div>
+                <div class="product-image"><img src="biketyre.jpeg" alt="RF-01 Phantom"><div class="quick-view">Quick View</div></div>
                 <div class="product-info">
-                    <div class="product-meta">
-                        <div class="product-category">Road Racing</div>
-                        <div class="product-rating">★★★★★</div>
-                    </div>
-                    <div class="product-name">FlowSpeed Pro 700c</div>
-                    <div class="product-specs">700c × 25mm • 220g • Tubeless</div>
-                    <div class="product-footer">
-                        <div class="product-price">$89.99</div>
-                        <button class="add-to-cart">+</button>
-                    </div>
+                    <div class="product-meta"><div class="product-category">Deep Concave</div><div class="product-rating">★★★★★</div></div>
+                    <div class="product-name">RF-01 Phantom</div>
+                    <div class="product-specs">18-24" • 5x112/114.3 • 8.5-12J</div>
+                    <div class="product-footer"><div class="product-price">$2,899</div><button class="add-to-cart">+</button></div>
                 </div>
             </div>
             <div class="product-card">
-                <div class="product-image">
-                    <img src="biketyre.jpeg" alt="TrailBlazer">
-                    <div class="quick-view">Quick View</div>
-                </div>
+                <div class="product-image"><img src="Mountain_bike_tyre_design_render_7f2bb73d4b.png" alt="RF-02 Vortex"><div class="quick-view">Quick View</div></div>
                 <div class="product-info">
-                    <div class="product-meta">
-                        <div class="product-category">Mountain</div>
-                        <div class="product-rating">★★★★★</div>
-                    </div>
-                    <div class="product-name">TrailBlazer MTB 29"</div>
-                    <div class="product-specs">29" × 2.3" • 850g • Puncture Proof</div>
-                    <div class="product-footer">
-                        <div class="product-price">$79.99</div>
-                        <button class="add-to-cart">+</button>
-                    </div>
+                    <div class="product-meta"><div class="product-category">Split Spoke</div><div class="product-rating">★★★★★</div></div>
+                    <div class="product-name">RF-02 Vortex</div>
+                    <div class="product-specs">19-22" • 5x112/120 • 9-11J</div>
+                    <div class="product-footer"><div class="product-price">$3,199</div><button class="add-to-cart">+</button></div>
                 </div>
             </div>
             <div class="product-card">
-                <div class="product-image">
-                    <img src="biketyre.jpeg" alt="AllRoad">
-                    <div class="quick-view">Quick View</div>
-                </div>
+                <div class="product-image"><img src="Mountain_bike_tyre_design_render_f3efe22e9d.png" alt="RF-03 Titan"><div class="quick-view">Quick View</div></div>
                 <div class="product-info">
-                    <div class="product-meta">
-                        <div class="product-category">Gravel</div>
-                        <div class="product-rating">★★★★☆</div>
-                    </div>
-                    <div class="product-name">AllRoad Explorer</div>
-                    <div class="product-specs">700c × 40mm • 450g • Tubeless</div>
-                    <div class="product-footer">
-                        <div class="product-price">$69.99</div>
-                        <button class="add-to-cart">+</button>
-                    </div>
+                    <div class="product-meta"><div class="product-category">Multi Spoke</div><div class="product-rating">★★★★★</div></div>
+                    <div class="product-name">RF-03 Titan</div>
+                    <div class="product-specs">19-23" • 5x114.3/130 • 8.5-11J</div>
+                    <div class="product-footer"><div class="product-price">$2,599</div><button class="add-to-cart">+</button></div>
                 </div>
             </div>
             <div class="product-card">
-                <div class="product-image">
-                    <img src="biketyre.jpeg" alt="CityGlide">
-                    <div class="quick-view">Quick View</div>
-                </div>
+                <div class="product-image"><img src="Mountain_bike_wheel_side_view_c5c1b5a5ac.png" alt="RF-04 Stealth"><div class="quick-view">Quick View</div></div>
                 <div class="product-info">
-                    <div class="product-meta">
-                        <div class="product-category">Urban</div>
-                        <div class="product-rating">★★★★★</div>
-                    </div>
-                    <div class="product-name">CityGlide Commuter</div>
-                    <div class="product-specs">700c × 32mm • 380g • Reflective</div>
-                    <div class="product-footer">
-                        <div class="product-price">$49.99</div>
-                        <button class="add-to-cart">+</button>
-                    </div>
+                    <div class="product-meta"><div class="product-category">Mesh Design</div><div class="product-rating">★★★★☆</div></div>
+                    <div class="product-name">RF-04 Stealth</div>
+                    <div class="product-specs">18-22" • 5x112/120 • 8-10.5J</div>
+                    <div class="product-footer"><div class="product-price">$2,799</div><button class="add-to-cart">+</button></div>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="cta">
-        <div class="cta-tyre">
-            <img src="biketyre.jpeg" alt="">
-        </div>
+        <div class="cta-bg-rim"><img src="biketyre.jpeg" alt=""></div>
         <div class="cta-content">
-            <h2>Ready to <em>upgrade</em><br>your ride?</h2>
-            <p>Join thousands of cyclists who've made the switch to TyreFlow.</p>
-            <a href="https://tyreflow.myshopify.com" class="btn btn-primary">Shop Now →</a>
+            <h2>Ready to <em>transform</em><br>your ride?</h2>
+            <p>Configure your perfect fitment. From daily driver to track weapon, we build wheels that perform.</p>
+            <a href="#products" class="btn btn-primary">Build Your Set →</a>
         </div>
     </section>
 
     <section class="email-capture">
         <div class="email-capture-content">
-            <h3>Join the Ride</h3>
-            <p>Subscribe for exclusive offers, new releases, and cycling tips.</p>
+            <h3>Join the Garage</h3>
+            <p>Subscribe for exclusive offers, new releases, and fitment guides.</p>
             <form class="email-form" onsubmit="event.preventDefault(); alert('Thanks for subscribing!');">
                 <input type="email" placeholder="Your email address" class="email-input" required>
                 <button type="submit" class="btn btn-primary">Subscribe</button>
@@ -347,12 +295,12 @@
     
     <footer>
         <div class="footer-grid">
-            <div class="footer-brand"><a href="#" class="nav-logo">TYREFLOW</a><p>Premium bicycle tyres engineered for performance. Race-proven compounds, superior grip.</p></div>
-            <div><div class="footer-title">Shop</div><ul class="footer-links"><li><a href="#">Road</a></li><li><a href="#">Mountain</a></li><li><a href="#">Gravel</a></li><li><a href="#">Urban</a></li></ul></div>
-            <div><div class="footer-title">Support</div><ul class="footer-links"><li><a href="#">Size Guide</a></li><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li></ul></div>
-            <div><div class="footer-title">Company</div><ul class="footer-links"><li><a href="#">About</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Contact</a></li></ul></div>
+            <div class="footer-brand"><a href="#" class="nav-logo">RIMFORGE</a><p>Premium forged wheels engineered for performance. Aerospace-grade aluminum, TÜV certified, perfect fitment.</p></div>
+            <div><div class="footer-title">Shop</div><ul class="footer-links"><li><a href="#products">Deep Concave</a></li><li><a href="#products">Split Spoke</a></li><li><a href="#products">Multi Spoke</a></li><li><a href="#products">Mesh Design</a></li></ul></div>
+            <div><div class="footer-title">Support</div><ul class="footer-links"><li><a href="#">Fitment Guide</a></li><li><a href="#">Warranty</a></li><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li></ul></div>
+            <div><div class="footer-title">Company</div><ul class="footer-links"><li><a href="#">About</a></li><li><a href="#">Technology</a></li><li><a href="#">Contact</a></li></ul></div>
         </div>
-        <div class="footer-bottom"><p>© 2026 TyreFlow</p><div class="social-links"><a href="#">IG</a><a href="#">FB</a><a href="#">YT</a></div></div>
+        <div class="footer-bottom"><p>© 2026 RimForge</p><div class="social-links"><a href="#">IG</a><a href="#">FB</a><a href="#">YT</a></div></div>
     </footer>
 
     <script>
